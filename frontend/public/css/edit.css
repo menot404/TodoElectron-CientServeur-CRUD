@@ -1,0 +1,16 @@
+/* Edit Form Styles */
+/* Réutilise les styles de add.css */
+@import url('./add.css');
+
+/* Styles additionnels si nécessaire */
+.task-form .checkbox-label {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.task-form .checkbox-label:hover {
+  background: #f8f9fa;
+}

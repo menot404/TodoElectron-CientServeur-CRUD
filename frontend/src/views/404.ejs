@@ -1,0 +1,38 @@
+<div class="container error-container">
+  <h1>🔍 Page Non Trouvée</h1>
+  <p class="error-message">La page que vous recherchez n'existe pas</p>
+  <p class="error-url">URL: <code><%= url %></code></p>
+  <div class="error-actions">
+    <a href="/app/v1/" class="btn btn-primary">Retour à l'accueil</a>
+  </div>
+</div>
+
+<style>
+  .error-container {
+    text-align: center;
+    padding: 50px 30px;
+  }
+
+  .error-message {
+    font-size: 18px;
+    color: #ff9800;
+    margin: 20px 0;
+  }
+
+  .error-url {
+    color: #999;
+    word-break: break-all;
+    margin: 20px 0;
+  }
+
+  .error-url code {
+    background: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+
+  .error-actions {
+    margin-top: 30px;
+  }
+</style>

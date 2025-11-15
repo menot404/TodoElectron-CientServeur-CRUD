@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>📝 Gestionnaire de Tâches</h1>
+
+  <a href="/app/v1/forms/add" class="btn btn-primary">➕ Nouvelle tâche</a>
+
+  <div class="tasks-list">
+    <% if (tasks.length === 0) { %>
+    <p class="empty-state">Aucune tâche. Créez-en une !</p>
+    <% } %> <% tasks.forEach(task => { %>
+    <div class="task-card <%= task.completed ? 'completed' : '' %>">
+      <div class="task-content">
+        <h3><%= task.title %></h3>
+        <% if (task.description) { %>
+        <p><%= task.description %></p>
+        <% } %>
+        <small>Créé le <%= task.createdAt.toLocaleDateString('fr-FR') %></small>
+      </div>
+
+      <div class="task-actions">
+        <form
+          method="POST"
+          action="/app/v1/tasks/<%= task._id %>/toggle"
+          style="display: inline"
+        >
+          <button
+            type="submit"
+            class="btn-icon"
+            title="Marquer comme <%= task.completed ? 'non complété' : 'complété' %>"
+          >
+            <%= task.completed ? '↩️' : '✓' %>
+          </button>
+        </form>
+
+        <a
+          href="/app/v1/forms/edit/<%= task._id %>"
+          class="btn-icon"
+          title="Modifier"
+          >✏️</a
+        >
+
+        <form
+          method="POST"
+          action="/app/v1/tasks/<%= task._id %>/delete"
+          style="display: inline"
+          onsubmit="return confirm('Supprimer cette tâche ?');"
+        >
+          <button type="submit" class="btn-icon btn-danger" title="Supprimer">
+            🗑️
+          </button>
+        </form>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>

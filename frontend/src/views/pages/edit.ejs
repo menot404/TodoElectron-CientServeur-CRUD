@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>✏️ Modifier la Tâche</h1>
+
+  <form method="POST" action="/app/v1/tasks/<%= task._id %>" class="task-form">
+    <div class="form-group">
+      <label for="title">Titre *</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= task.title %>"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4">
+<%= task.description || '' %></textarea
+      >
+    </div>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" name="completed" <%= task.completed ? 'checked' :
+        '' %>> Tâche complétée
+      </label>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <a href="/app/v1/" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
