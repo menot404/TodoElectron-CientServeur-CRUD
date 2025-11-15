@@ -1,0 +1,126 @@
+════════════════════════════════════════════════════════════════════════════════
+                     ✅ FIX LAYOUT DYNAMIQUE COMPLÉTÉ!
+════════════════════════════════════════════════════════════════════════════════
+
+RÉSUMÉ DU FIX
+═════════════════════════════════════════════════════════════════════════════════
+
+Tu as demandé: "Je veux regrouper les composants footer et header dans index.ejs
+              de manière dynamique"
+
+Solution appliquée: Système de layout EJS avec express-ejs-layouts
+
+════════════════════════════════════════════════════════════════════════════════
+
+FICHIERS MODIFIÉS
+═════════════════════════════════════════════════════════════════════════════════
+
+1. ✅ server.js
+   - Ajout: const expressLayouts = require('express-ejs-layouts')
+   - Ajout: app.set('layout', 'index')
+   - Ajout: app.use(expressLayouts)
+   - Change: vues de 'frontend/src/views' à 'frontend/src'
+
+2. ✅ frontend/src/index.ejs
+   - Corrigé les chemins des includes
+   - Ajout: titre dynamique <%= typeof title !== 'undefined' ? title : '...' %>
+   - Structure: header + main (body) + footer
+
+3. ✅ backend/controller/taskController.js
+   - Change: res.render('pages/home') → res.render('views/pages/home')
+   - Ajout: { tasks, title: 'Accueil - TodoApp' }
+
+4. ✅ backend/controller/formController.js
+   - Change: res.render('pages/add') → res.render('views/pages/add')
+   - Change: res.render('pages/edit') → res.render('views/pages/edit')
+   - Ajout: title dynamique pour chaque page
+
+5. ✅ server.js - Gestion 404
+   - Change: res.render('404') → res.render('views/404')
+   - Ajout: title: 'Page Non Trouvée'
+
+════════════════════════════════════════════════════════════════════════════════
+
+FICHIERS CRÉÉS
+═════════════════════════════════════════════════════════════════════════════════
+
+✅ express-ejs-layouts (installé via npm install express-ejs-layouts)
+✅ LAYOUT-FIX.md (documentation complète du fix)
+
+════════════════════════════════════════════════════════════════════════════════
+
+STRUCTURE FINALE
+═════════════════════════════════════════════════════════════════════════════════
+
+index.ejs (Template Principal - Wrapper)
+│
+├── CSS imports (tous les fichiers CSS ici)
+├── <%- include('./views/partials/header') %>
+├── <main> <%- body %> </main>
+└── <%- include('./views/partials/footer') %>
+    │
+    ├── views/pages/home.ejs (Contenu dynamique)
+    ├── views/pages/add.ejs (Contenu dynamique)
+    └── views/pages/edit.ejs (Contenu dynamique)
+
+════════════════════════════════════════════════════════════════════════════════
+
+FONCTIONNEMENT
+═════════════════════════════════════════════════════════════════════════════════
+
+Utilisateur visite http://localhost:3000/app/v1/
+   ↓
+Controller: res.render('views/pages/home', { tasks, title: '...' })
+   ↓
+express-ejs-layouts: "Ce n'est pas le layout principal, j'utilise index.ejs"
+   ↓
+Rendu final:
+   - <%- include('./views/partials/header') %>
+   - <contenu de pages/home.ejs>
+   - <%- include('./views/partials/footer') %>
+
+════════════════════════════════════════════════════════════════════════════════
+
+AVANTAGES
+═════════════════════════════════════════════════════════════════════════════════
+
+✅ DRY - Header et footer définis une seule fois
+✅ Dynamique - Titre change selon la page
+✅ Maintenable - Modification du header = partout
+✅ Professionnel - Architecture MVC claire
+✅ Scalable - Facile d'ajouter de nouvelles pages
+
+════════════════════════════════════════════════════════════════════════════════
+
+PROCHAINES ÉTAPES
+═════════════════════════════════════════════════════════════════════════════════
+
+1. Redémarre le serveur:
+   $ npm run dev
+
+2. Teste l'app:
+   http://localhost:3000/app/v1/
+
+3. Vérifie que:
+   ✓ Header s'affiche
+   ✓ Contenu s'affiche
+   ✓ Footer s'affiche
+   ✓ Titre change selon la page
+
+4. Lis LAYOUT-FIX.md pour plus de détails
+
+════════════════════════════════════════════════════════════════════════════════
+
+BONUS: CUSTOMISATION
+═════════════════════════════════════════════════════════════════════════════════
+
+Si tu veux utiliser un layout différent pour une page:
+    res.render('page', { layout: 'custom-layout' })
+
+Si tu veux aucun layout:
+    res.render('page', { layout: false })
+
+════════════════════════════════════════════════════════════════════════════════
+
+✨ Ton app est maintenant plus professionnelle et maintenable! 🚀
+════════════════════════════════════════════════════════════════════════════════
