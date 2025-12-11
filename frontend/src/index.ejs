@@ -3,7 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Script de thème AVANT les CSS pour éviter le flash -->
+    <script>
+      (function () {
+        // Détecter le thème du système
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const systemTheme = prefersDark ? "dark" : "light";
+
+        // Utiliser le thème sauvegardé, sinon le thème du système
+        const theme = localStorage.getItem("theme") || systemTheme;
+
+        document.documentElement.setAttribute("data-theme", theme);
+        console.log(
+          "🎨 Thème appliqué:",
+          theme,
+          "(système:",
+          systemTheme + ")"
+        );
+      })();
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/variables.css" />
     <link rel="stylesheet" href="/css/general.css" />
+    <link rel="stylesheet" href="/css/theme-switch.css" />
     <link rel="stylesheet" href="/css/header.css" />
     <link rel="stylesheet" href="/css/footer.css" />
     <link rel="stylesheet" href="/css/home.css" />
@@ -11,10 +37,15 @@
     <link rel="stylesheet" href="/css/edit.css" />
 
     <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>
-      
-    </title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Script principal -->
+    <script src="/js/index.js" type="module" defer></script>
+
+    <title>TodoApp</title>
   </head>
   <body>
     <!-- HEADER DYNAMIQUE -->
@@ -23,7 +54,6 @@
     <!-- CONTENU PRINCIPAL DYNAMIQUE -->
     <main><%- body %></main>
 
-    
     <%- include('./views/partials/footer') %>
   </body>
 </html>

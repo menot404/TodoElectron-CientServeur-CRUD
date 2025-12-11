@@ -1,3 +1,5 @@
+@import url("../public/css/variables.css");
+@import url("../public/css/theme-switch.css");
 @import url("../public/css/general.css");
 @import url("../public/css/add.css");
 @import url("../public/css/edit.css");

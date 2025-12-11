@@ -5,15 +5,15 @@
 
 .empty-state {
   text-align: center;
-  color: #999;
+  color: var(--text-tertiary);
   padding: 40px 20px;
   font-size: 18px;
   font-style: italic;
 }
 
 .task-card {
-  background: #f8f9fa;
-  border-left: 4px solid #667eea;
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--primary);
   padding: 20px;
   margin-bottom: 15px;
   border-radius: 8px;
@@ -22,23 +22,24 @@
   align-items: center;
   gap: 20px;
   transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
 }
 
 .task-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
   transform: translateX(5px);
 }
 
 .task-card.completed {
   opacity: 0.7;
-  background: #e8f5e9;
-  border-left-color: #4caf50;
+  background: var(--bg-secondary);
+  border-left-color: var(--success);
 }
 
 .task-card.completed .task-content h3 {
   text-decoration: line-through;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .task-content {
@@ -47,19 +48,19 @@
 
 .task-content h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: var(--text-primary);
   font-size: 18px;
 }
 
 .task-content p {
   margin: 8px 0;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.5;
   font-size: 14px;
 }
 
 .task-content small {
-  color: #999;
+  color: var(--text-tertiary);
   font-size: 12px;
   display: block;
   margin-top: 8px;
@@ -78,21 +79,22 @@
 .task-actions .btn-icon {
   padding: 8px 12px;
   font-size: 18px;
-  background: white;
-  border: 1px solid #ddd;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   transition: all 0.2s;
+  color: var(--text-primary);
 }
 
 .task-actions .btn-icon:hover {
-  background: #667eea;
+  background: var(--primary);
   color: white;
-  border-color: #667eea;
+  border-color: var(--primary);
 }
 
 .task-actions .btn-icon.btn-danger:hover {
-  background: #f44336;
-  border-color: #f44336;
+  background: var(--danger);
+  border-color: var(--danger);
 }
 
 @media (max-width: 600px) {

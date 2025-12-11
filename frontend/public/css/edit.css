@@ -4,13 +4,14 @@
 
 /* Styles additionnels si nécessaire */
 .task-form .checkbox-label {
-  background: white;
+  background: none;
   padding: 15px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+  border: none;
   margin-bottom: 20px;
+  font-size: 1.1rem;
+  width: 30%;
 }
 
-.task-form .checkbox-label:hover {
-  background: #f8f9fa;
+.task-form .checkbox-label input{
+  margin-right: 1rem;
 }

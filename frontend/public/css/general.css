@@ -6,22 +6,30 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
   padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Gradient background (optionnel pour le light mode) */
+:root[data-theme="light"] body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
+  background: var(--bg-secondary);
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-md);
+  color: var(--text-primary);
 }
 
 h1 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 30px;
   text-align: center;
 }
@@ -40,23 +48,23 @@ h1 {
 }
 
 .btn-primary {
-  background: #667eea;
+  background: var(--primary);
   color: white;
   margin-bottom: 20px;
 }
 
 .btn-primary:hover {
-  background: #5568d3;
+  background: var(--primary-dark);
   transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background: #6c757d;
+  background: var(--text-secondary);
   color: white;
 }
 
 .btn-secondary:hover {
-  background: #5a6268;
+  background: var(--text-tertiary);
 }
 
 .btn-icon {
@@ -66,6 +74,7 @@ h1 {
   cursor: pointer;
   padding: 5px 10px;
   transition: transform 0.2s;
+  color: var(--text-primary);
 }
 
 .btn-icon:hover {
@@ -74,4 +83,9 @@ h1 {
 
 .btn-danger:hover {
   filter: brightness(1.2);
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
 }

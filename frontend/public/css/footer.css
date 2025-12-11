@@ -1,11 +1,19 @@
 /* Footer Styles */
 .footer {
-  background: #333;
-  color: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   text-align: center;
   padding: 30px 20px;
   margin-top: 50px;
-  border-top: 3px solid #667eea;
+  border-top: 3px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+/* Thème clair: fond sombre */
+:root[data-theme="light"] .footer {
+  background: #333;
+  color: white;
+  border-top-color: #667eea;
 }
 
 .footer-container {

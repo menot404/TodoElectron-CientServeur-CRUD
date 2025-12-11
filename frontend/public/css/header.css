@@ -1,13 +1,24 @@
 /* Header Styles */
 .header {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 20px 0;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+/* Thème clair: gradient coloré */
+:root[data-theme="light"] .header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 20px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  border-bottom: none;
+}
+
+:root[data-theme="light"] .header .logo h2,
+:root[data-theme="light"] .header .nav-link {
+  color: white;
 }
 
 .header-container {
@@ -22,17 +33,18 @@
 .logo h2 {
   font-size: 24px;
   margin: 0;
-  color: white;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .nav {
   display: flex;
-  gap: 15px;
+  gap: 45px;
   align-items: center;
 }
 
 .nav-link {
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 6px;
@@ -40,8 +52,16 @@
   font-size: 14px;
 }
 
+:root[data-theme="light"] .nav-link {
+  color: white;
+}
+
 .nav-link:hover:not(.btn) {
   background: rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .nav-link:hover:not(.btn) {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .nav-link.btn {
