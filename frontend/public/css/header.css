@@ -1,10 +1,11 @@
 /* Header Styles */
 .header {
+  position: sticky;
   background: var(--bg-secondary);
   color: var(--text-primary);
   padding: 20px 0;
   box-shadow: var(--shadow-md);
-  margin-bottom: 30px;
+  margin-bottom: 30px;top: 0px;
   border-bottom: 2px solid var(--border-color);
   transition: all 0.3s ease;
 }
