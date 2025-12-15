@@ -4,25 +4,25 @@
 
 class ThemeManager {
   constructor() {
-    this.STORAGE_KEY = 'app-theme';
-    this.LIGHT_THEME = 'light';
-    this.DARK_THEME = 'dark';
+    this.STORAGE_KEY = "app-theme";
+    this.LIGHT_THEME = "light";
+    this.DARK_THEME = "dark";
     this.HTML_ELEMENT = document.documentElement;
-    this.CHECKBOX_SELECTOR = '#theme-toggle';
+    this.CHECKBOX_SELECTOR = "#theme-toggle";
 
     this.init();
   }
 
   // Initialisation au chargement
   init() {
-    console.log('🎨 ThemeManager: Initialisation...');
+    console.log("🎨 ThemeManager: Initialisation...");
 
     // Appliquer le thème sauvegardé ou détecté
     this.applyStoredOrSystemTheme();
 
     // Attendre que le DOM soit chargé pour synchroniser le checkbox
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.setupCheckbox());
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => this.setupCheckbox());
     } else {
       this.setupCheckbox();
     }
@@ -30,7 +30,9 @@ class ThemeManager {
 
   // Obtenir le thème système
   getSystemTheme() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     return prefersDark ? this.DARK_THEME : this.LIGHT_THEME;
   }
 
@@ -54,11 +56,13 @@ class ThemeManager {
       theme = this.LIGHT_THEME;
     }
 
-    this.HTML_ELEMENT.setAttribute('data-theme', theme);
+    this.HTML_ELEMENT.setAttribute("data-theme", theme);
     console.log(`✅ Thème appliqué: ${theme}`);
 
     // Émettre un événement personnalisé
-    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+    window.dispatchEvent(
+      new CustomEvent("theme-changed", { detail: { theme } })
+    );
   }
 
   // Sauvegarder le thème dans localStorage
@@ -83,17 +87,21 @@ class ThemeManager {
     }
 
     // Synchroniser l'état du checkbox avec le thème actuel
-    const currentTheme = this.HTML_ELEMENT.getAttribute('data-theme');
+    const currentTheme = this.HTML_ELEMENT.getAttribute("data-theme");
     checkbox.checked = currentTheme === this.DARK_THEME;
-    console.log(`✅ Checkbox synchronisé: ${checkbox.checked ? 'dark' : 'light'}`);
+    console.log(
+      `✅ Checkbox synchronisé: ${checkbox.checked ? "dark" : "light"}`
+    );
 
     // Écouter les changements du checkbox
-    checkbox.addEventListener('change', (e) => this.handleToggle(e));
+    checkbox.addEventListener("change", (e) => this.handleToggle(e));
 
     // Écouter les changements du thème système
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      this.handleSystemThemeChange(e);
-    });
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        this.handleSystemThemeChange(e);
+      });
   }
 
   // Gérer le changement du checkbox
@@ -136,13 +144,14 @@ class ThemeManager {
 
   // Méthode pour obtenir le thème actuel
   getCurrentTheme() {
-    return this.HTML_ELEMENT.getAttribute('data-theme');
+    return this.HTML_ELEMENT.getAttribute("data-theme");
   }
 
   // Basculer le thème
   toggleTheme() {
     const current = this.getCurrentTheme();
-    const newTheme = current === this.LIGHT_THEME ? this.DARK_THEME : this.LIGHT_THEME;
+    const newTheme =
+      current === this.LIGHT_THEME ? this.DARK_THEME : this.LIGHT_THEME;
     this.setTheme(newTheme);
   }
 }
