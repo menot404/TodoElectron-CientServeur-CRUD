@@ -5,17 +5,17 @@
     --bg-secondary: #f8f9fa;
     --bg-tertiary: #f0f2f5;
     --bg-overlay: rgba(0, 0, 0, 0.05);
-    
+
     /* Textes */
     --text-primary: #1a1a1a;
     --text-secondary: #666666;
     --text-tertiary: #999999;
     --text-inverse: #ffffff;
-    
+
     /* Frontière */
     --border-color: #e0e0e0;
     --border-light: #ececec;
-    
+
     /* Couleurs thématiques */
     --primary: #4f2783;
     --primary-dark: #3d1f63;
@@ -25,23 +25,23 @@
     --danger: #e74c3c;
     --warning: #f39c12;
     --info: #3498db;
-    
+
     /* Inputs & Forms */
     --input-bg: #ffffff;
     --input-border: #d0d0d0;
     --input-focus-border: #4f2783;
     --input-focus-shadow: rgba(79, 39, 131, 0.1);
-    
+
     /* Ombres */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
-    
+
     /* Switch */
     --switch-bg: #e0e0e0;
     --switch-border: #d0d0d0;
     --switch-thumb: #ffffff;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
@@ -55,17 +55,17 @@
     --bg-secondary: #161b22;
     --bg-tertiary: #21262d;
     --bg-overlay: rgba(255, 255, 255, 0.05);
-    
+
     /* Textes */
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
     --text-tertiary: #6e7681;
     --text-inverse: #0d1117;
-    
+
     /* Frontière */
     --border-color: #30363d;
     --border-light: #21262d;
-    
+
     /* Couleurs thématiques */
     --primary: #9d7fd9;
     --primary-dark: #7c5aa6;
@@ -75,23 +75,23 @@
     --danger: #f85149;
     --warning: #d29922;
     --info: #79c0ff;
-    
+
     /* Inputs & Forms */
     --input-bg: #0d1117;
     --input-border: #30363d;
     --input-focus-border: #9d7fd9;
     --input-focus-shadow: rgba(157, 127, 217, 0.2);
-    
+
     /* Ombres */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
-    
+
     /* Switch */
     --switch-bg: #30363d;
     --switch-border: #444c56;
     --switch-thumb: #e6edf3;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
