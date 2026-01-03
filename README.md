@@ -1,23 +1,23 @@
 # 📝 TodoApp - Gestionnaire de Tâches
 
-Une application Node.js CRUD complète pour gérer des tâches avec MongoDB et Express.
+Application Node.js CRUD complète pour gérer des tâches avec MongoDB et Express.
 
 ## ✨ Fonctionnalités
 
-- ✅ **Créer** des tâches avec titre et description
-- ✅ **Lire** et afficher toutes les tâches
-- ✅ **Modifier** les tâches existantes
-- ✅ **Supprimer** les tâches
-- ✅ **Marquer comme complété** les tâches
-- ✅ **Interface responsive** et moderne
+- **Créer** des tâches avec titre et description
+- **Lire** et afficher toutes les tâches
+- **Modifier** les tâches existantes
+- **Supprimer** les tâches
+- **Marquer comme complété** les tâches
+- **Interface responsive** et moderne
 
 ## 🛠️ Technologies utilisées
 
-- **Backend**: Node.js, Express.js
-- **Base de données**: MongoDB
-- **Template Engine**: EJS
-- **CSS**: Personnalisé avec animations
-- **Port**: 3000
+- **Backend** : Node.js, Express.js
+- **Base de données** : MongoDB
+- **Template Engine** : EJS
+- **CSS** : Personnalisé avec animations
+- **Port** : 3000
 
 ## 📦 Installation
 
@@ -37,7 +37,7 @@ cd learnCRUD_InNodejs
 npm install
 
 # 3. Assure-toi que MongoDB est en cours d'exécution
-# Si c'est local : mongod
+mongod
 
 # 4. Lance le serveur
 npm run dev
@@ -57,7 +57,7 @@ npm run dev
 node server.js
 ```
 
-Le serveur démarrera sur `http://localhost:3000/app/v1/`
+Le serveur démarre sur : `http://localhost:3000/app/v1/`
 
 ## 📁 Structure du projet
 
@@ -69,6 +69,8 @@ learnCRUD_InNodejs/
 │   │   └── taskController.js      # Contrôleur des tâches
 │   ├── data/
 │   │   └── dbConfig.js            # Configuration MongoDB
+│   ├── middleware/
+│   │   └── errorHandler.js        # Gestion des erreurs
 │   ├── model/
 │   │   └── taskModel.js           # Schéma Task
 │   └── routes/
@@ -80,18 +82,27 @@ learnCRUD_InNodejs/
 │   │   ├── css/                   # Feuilles de style
 │   │   └── img/                   # Images
 │   └── src/
-│       ├── index.ejs              # Template principal
+│       ├── index.ejs              # Layout principal
 │       └── views/
 │           ├── pages/
 │           │   ├── home.ejs       # Page d'accueil
 │           │   ├── add.ejs        # Formulaire d'ajout
 │           │   └── edit.ejs       # Formulaire d'édition
-│           └── partials/
-│               ├── header.ejs     # En-tête
-│               └── footer.ejs     # Pied de page
+│           ├── partials/
+│           │   ├── header.ejs     # En-tête
+│           │   └── footer.ejs     # Pied de page
+│           ├── 404.ejs            # Page 404
+│           └── error.ejs          # Page d'erreur
 ├── server.js                       # Point d'entrée principal
 ├── package.json                    # Dépendances npm
-└── README.md                       # Documentation
+├── README.md                       # Documentation
+├── CORRECTIONS.md                  # Corrections apportées
+├── SUMMARY.md                      # Vue d'ensemble
+├── .env.example                    # Exemple de configuration
+├── .gitignore                      # Fichiers à ignorer
+├── start.sh                        # Script de démarrage
+├── check-structure.sh              # Vérification de la structure
+└── FINAL-REPORT.sh                 # Rapport final
 ```
 
 ## 🔌 Points de terminaison API
@@ -124,7 +135,7 @@ learnCRUD_InNodejs/
 
 ## 🎨 Design
 
-L'application utilise un design moderne avec:
+L'application utilise un design moderne avec :
 
 - Gradient violet/mauve
 - Animations lisses
@@ -133,19 +144,19 @@ L'application utilise un design moderne avec:
 
 ## 🐛 Corrections apportées
 
-✅ Ajout du `await` manquant dans `dbConfig.js`
-✅ Correction de `Completed` → `completed` dans le schéma
-✅ Correction de `createAt` → `createdAt` dans le schéma
-✅ Import du modèle Task manquant dans `formController.js`
-✅ Correction de la route `/add` dans `formRoute.js`
-✅ Chemins des vues corrigés dans `server.js`
-✅ Création des fichiers CSS manquants
-✅ Création des partials header et footer
-✅ Redirection correcte vers les bonnes URLs
+- Ajout du `await` manquant dans `dbConfig.js`
+- Correction de `Completed` → `completed` dans le schéma
+- Correction de `createAt` → `createdAt` dans le schéma
+- Import du modèle Task manquant dans `formController.js`
+- Correction de la route `/add` dans `formRoute.js`
+- Chemins des vues corrigés dans `server.js`
+- Création des fichiers CSS manquants
+- Création des partials header et footer
+- Redirection correcte vers les bonnes URLs
 
 ## 💡 Conseil
 
-Pour MongoDB local:
+Pour MongoDB local :
 
 ```bash
 # Ouvre un terminal séparé
@@ -155,7 +166,5 @@ mongod
 ## 📝 License
 
 ISC
-
----
 
 **Créé avec ❤️ pour apprendre les bases du CRUD avec Node.js**
