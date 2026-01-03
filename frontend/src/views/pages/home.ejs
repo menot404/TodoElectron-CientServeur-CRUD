@@ -15,7 +15,12 @@
         <% if (task.description) { %>
         <p><%= task.description %></p>
         <% } %>
-        <small>Créé le <%= task.createdAt.toLocaleDateString('fr-FR') %></small>
+        <small>Créé le <%= moment(task.updatedAt).format("DD/MM/YYYY à HH:mm")%></small>
+        <%if(task.updatedAt.getTime() !== task.createdAt.getTime()){%>
+          <br/>
+          <small>Modifié il y a <%= moment(task.updatedAt).fromNow() %></small>
+
+        <%}%>
       </div>
 
       <div class="task-actions">
