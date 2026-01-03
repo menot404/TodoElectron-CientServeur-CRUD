@@ -15,10 +15,16 @@
         <% if (task.description) { %>
         <p><%= task.description %></p>
         <% } %>
-        <small>Créé le <%= moment(task.updatedAt).format("DD/MM/YYYY à HH:mm")%></small>
-        <%if(task.updatedAt.getTime() !== task.createdAt.getTime()){%>
           <br/>
-          <small>Modifié il y a <%= moment(task.updatedAt).fromNow() %></small>
+        <small>
+          <i class="fa fa-calendar"></i> 
+            Créé le <%= moment(task.updatedAt).format("DD/MM/YYYY à HH:mm")%>
+        </small>
+        <%if(task.updatedAt.getTime() !== task.createdAt.getTime()){%>
+          <small>
+            <i class="fa fa-edit"></i> 
+              Modifié il y a <%= moment(task.updatedAt).fromNow() %>
+            </small>
 
         <%}%>
       </div>
