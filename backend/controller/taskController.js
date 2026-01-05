@@ -2,14 +2,18 @@ const Task = require("../model/taskModel");
 const moment = require("moment");
 
 // Config moment en francais
-moment.locale('fr');
+moment.locale("fr");
 // CONTROLLER
 
 // READ - Afficher toutes les tâches
 const read = async (req, res) => {
   try {
     const tasks = await Task.find().sort({ createdAt: -1 });
-    res.render("views/pages/home", { tasks, title: "Accueil - TodoApp", moment });
+    res.render("views/pages/home", {
+      tasks,
+      title: "Accueil - TodoApp",
+      moment,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Erreur serveur");
