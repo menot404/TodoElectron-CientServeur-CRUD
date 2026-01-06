@@ -1,5 +1,5 @@
 // ========================================
-// SYSTÈME DE THÈME DARK/LIGHT - PRO UI/UX
+// THÈME DARK/LIGHT
 // ========================================
 
 class ThemeManager {
@@ -13,151 +13,259 @@ class ThemeManager {
     this.init();
   }
 
-  // Initialisation au chargement
   init() {
-    console.log("🎨 ThemeManager: Initialisation...");
-
-    // Appliquer le thème sauvegardé ou détecté
     this.applyStoredOrSystemTheme();
-
-    // Attendre que le DOM soit chargé pour synchroniser le checkbox
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => this.setupCheckbox());
-    } else {
-      this.setupCheckbox();
-    }
+    this.setupCheckbox();
   }
 
-  // Obtenir le thème système
   getSystemTheme() {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    return prefersDark ? this.DARK_THEME : this.LIGHT_THEME;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches 
+      ? this.DARK_THEME 
+      : this.LIGHT_THEME;
   }
 
-  // Obtenir le thème à appliquer (localStorage > système > light)
   getThemeToApply() {
     const stored = localStorage.getItem(this.STORAGE_KEY);
-    if (stored) {
-      console.log(`💾 Thème trouvé dans localStorage: ${stored}`);
-      return stored;
-    }
-
-    const system = this.getSystemTheme();
-    console.log(`🖥️  Thème système détecté: ${system}`);
-    return system;
+    return stored || this.getSystemTheme();
   }
 
-  // Appliquer le thème
   applyTheme(theme) {
     if (theme !== this.LIGHT_THEME && theme !== this.DARK_THEME) {
-      console.warn(`⚠️  Thème invalide: ${theme}. Utilisation de 'light'.`);
       theme = this.LIGHT_THEME;
     }
-
     this.HTML_ELEMENT.setAttribute("data-theme", theme);
-    console.log(`✅ Thème appliqué: ${theme}`);
-
-    // Émettre un événement personnalisé
-    window.dispatchEvent(
-      new CustomEvent("theme-changed", { detail: { theme } })
-    );
   }
 
-  // Sauvegarder le thème dans localStorage
   saveTheme(theme) {
     localStorage.setItem(this.STORAGE_KEY, theme);
-    console.log(`💾 Thème sauvegardé dans localStorage: ${theme}`);
   }
 
-  // Appliquer et sauvegarder
   applyStoredOrSystemTheme() {
     const theme = this.getThemeToApply();
     this.applyTheme(theme);
   }
 
-  // Configurer le checkbox et les événements
   setupCheckbox() {
     const checkbox = document.querySelector(this.CHECKBOX_SELECTOR);
+    if (!checkbox) return;
 
-    if (!checkbox) {
-      console.warn(`⚠️  Élément ${this.CHECKBOX_SELECTOR} non trouvé!`);
-      return;
-    }
-
-    // Synchroniser l'état du checkbox avec le thème actuel
     const currentTheme = this.HTML_ELEMENT.getAttribute("data-theme");
     checkbox.checked = currentTheme === this.DARK_THEME;
-    console.log(
-      `✅ Checkbox synchronisé: ${checkbox.checked ? "dark" : "light"}`
-    );
 
-    // Écouter les changements du checkbox
-    checkbox.addEventListener("change", (e) => this.handleToggle(e));
-
-    // Écouter les changements du thème système
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        this.handleSystemThemeChange(e);
-      });
-  }
-
-  // Gérer le changement du checkbox
-  handleToggle(event) {
-    const isChecked = event.target.checked;
-    const newTheme = isChecked ? this.DARK_THEME : this.LIGHT_THEME;
-
-    console.log(`🔀 Changement de thème via switch: ${newTheme}`);
-
-    this.applyTheme(newTheme);
-    this.saveTheme(newTheme);
-  }
-
-  // Gérer le changement du thème système
-  handleSystemThemeChange(event) {
-    // Seulement appliquer si aucun thème n'a été choisi manuellement
-    if (!localStorage.getItem(this.STORAGE_KEY)) {
-      const newTheme = event.matches ? this.DARK_THEME : this.LIGHT_THEME;
-      console.log(`��️  Thème système changé en: ${newTheme}`);
-
+    checkbox.addEventListener("change", (e) => {
+      const newTheme = e.target.checked ? this.DARK_THEME : this.LIGHT_THEME;
       this.applyTheme(newTheme);
-
-      // Mettre à jour le checkbox si disponible
-      const checkbox = document.querySelector(this.CHECKBOX_SELECTOR);
-      if (checkbox) {
-        checkbox.checked = newTheme === this.DARK_THEME;
-      }
-    }
-  }
-
-  // Méthode pour changer le thème via code
-  setTheme(theme) {
-    this.applyTheme(theme);
-    this.saveTheme(theme);
-    const checkbox = document.querySelector(this.CHECKBOX_SELECTOR);
-    if (checkbox) {
-      checkbox.checked = theme === this.DARK_THEME;
-    }
-  }
-
-  // Méthode pour obtenir le thème actuel
-  getCurrentTheme() {
-    return this.HTML_ELEMENT.getAttribute("data-theme");
-  }
-
-  // Basculer le thème
-  toggleTheme() {
-    const current = this.getCurrentTheme();
-    const newTheme =
-      current === this.LIGHT_THEME ? this.DARK_THEME : this.LIGHT_THEME;
-    this.setTheme(newTheme);
+      this.saveTheme(newTheme);
+    });
   }
 }
 
-// Initialiser le gestionnaire de thème
-const themeManager = new ThemeManager();
+// ========================================
+// MODAL DE CONFIRMATION
+// ========================================
 
-// Exposer globalement pour accès externe
-window.themeManager = themeManager;
+class ConfirmationModal {
+  constructor() {
+    console.log('🔧 Initialisation du modal de confirmation...');
+    
+    // Éléments du modal
+    this.modal = document.getElementById('confirmationModal');
+    this.modalMessage = document.getElementById('modalMessage');
+    this.taskPreview = document.getElementById('taskPreview');
+    this.confirmBtn = document.getElementById('modalConfirmBtn');
+    this.cancelBtn = document.getElementById('modalCancelBtn');
+    this.closeBtn = document.querySelector('.modal-close-btn');
+    
+    // Vérification des éléments
+    if (!this.modal) {
+      console.error('❌ Modal non trouvé! Vérifiez que le HTML est présent dans index.ejs');
+      return;
+    }
+    
+    if (!this.modalMessage || !this.confirmBtn || !this.cancelBtn) {
+      console.error('❌ Un ou plusieurs éléments du modal sont manquants');
+      return;
+    }
+    
+    this.currentTaskId = null;
+    this.currentTaskTitle = null;
+    this.currentForm = null;
+    
+    this.init();
+  }
+
+  init() {
+    console.log('✅ Éléments du modal trouvés, initialisation...');
+    
+    // Écouteurs d'événements
+    this.cancelBtn.addEventListener('click', () => this.hide());
+    this.closeBtn?.addEventListener('click', () => this.hide());
+    this.confirmBtn.addEventListener('click', () => this.confirm());
+    
+    // Fermer en cliquant sur l'overlay
+    this.modal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay') || e.target === this.modal) {
+        this.hide();
+      }
+    });
+    
+    // Fermer avec la touche Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+        this.hide();
+      }
+    });
+    
+    // Lier les boutons de suppression
+    this.bindDeleteButtons();
+    
+    console.log('✅ Modal initialisé avec succès');
+  }
+
+  bindDeleteButtons() {
+    // Utiliser la délégation d'événements pour gérer les boutons dynamiques
+    document.addEventListener('click', (e) => {
+      const deleteBtn = e.target.closest('.delete-btn');
+      if (deleteBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.show(deleteBtn);
+      }
+    });
+    
+    // Afficher un message de débogage
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    console.log(`🔍 ${deleteButtons.length} bouton(s) de suppression détecté(s)`);
+  }
+
+  show(deleteButton) {
+    console.log('📋 Affichage du modal...');
+    
+    // Récupérer les données
+    this.currentTaskId = deleteButton.dataset.taskId;
+    this.currentTaskTitle = deleteButton.dataset.taskTitle || 'Tâche sans titre';
+    
+    if (!this.currentTaskId) {
+      console.error('❌ ID de tâche manquant');
+      return;
+    }
+    
+    // Mettre à jour le contenu du modal
+    this.modalMessage.textContent = `Êtes-vous sûr de vouloir supprimer cette tâche ?`;
+    
+    if (this.taskPreview) {
+      this.taskPreview.innerHTML = `
+        <h4>${this.escapeHtml(this.currentTaskTitle)}</h4>
+        <p><small>ID: ${this.currentTaskId}</small></p>
+      `;
+    }
+    
+    // Trouver le formulaire de suppression
+    this.findOrCreateForm();
+    
+    // Afficher le modal
+    this.modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus sur le bouton Annuler pour UX
+    setTimeout(() => this.cancelBtn.focus(), 100);
+  }
+
+  findOrCreateForm() {
+    // Chercher un formulaire existant
+    this.currentForm = document.querySelector(`form[action*="/tasks/${this.currentTaskId}/delete"]`);
+    
+    // Si aucun formulaire n'est trouvé, en créer un
+    if (!this.currentForm) {
+      console.log(`📝 Création d'un formulaire pour la tâche ${this.currentTaskId}`);
+      this.currentForm = document.createElement('form');
+      this.currentForm.method = 'POST';
+      this.currentForm.action = `/app/v1/tasks/${this.currentTaskId}/delete`;
+      this.currentForm.style.display = 'none';
+      document.body.appendChild(this.currentForm);
+    }
+  }
+
+  hide() {
+    console.log('🔒 Fermeture du modal');
+    this.modal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Réinitialiser
+    this.currentTaskId = null;
+    this.currentTaskTitle = null;
+    this.currentForm = null;
+    
+    // Réinitialiser le bouton de confirmation
+    this.confirmBtn.innerHTML = '<i class="fas fa-trash"></i> Supprimer';
+    this.confirmBtn.disabled = false;
+  }
+
+  confirm() {
+    if (!this.currentForm) {
+      console.error('❌ Aucun formulaire à soumettre');
+      this.hide();
+      return;
+    }
+    
+    console.log(`🗑️  Suppression de la tâche: ${this.currentTaskTitle}`);
+    
+    // Animation de suppression
+    this.confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Suppression...';
+    this.confirmBtn.disabled = true;
+    
+    // Soumettre après un délai pour l'effet visuel
+    setTimeout(() => {
+      try {
+        this.currentForm.submit();
+      } catch (error) {
+        console.error('❌ Erreur lors de la soumission:', error);
+        this.hide();
+      }
+    }, 800);
+  }
+
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+}
+
+// ========================================
+// INITIALISATION PRINCIPALE
+// ========================================
+
+// Initialiser quand le DOM est complètement chargé
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 Application TodoApp - Initialisation...');
+  
+  // Initialiser le gestionnaire de thème
+  try {
+    const themeManager = new ThemeManager();
+    window.themeManager = themeManager;
+    console.log('✅ Gestionnaire de thème initialisé');
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'initialisation du thème:', error);
+  }
+  
+  // Initialiser le modal de confirmation
+  try {
+    const confirmationModal = new ConfirmationModal();
+    window.confirmationModal = confirmationModal;
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'initialisation du modal:', error);
+  }
+  
+  // Message de confirmation
+  console.log('✅ TodoApp prêt à fonctionner !');
+  
+  // Vérification finale
+  setTimeout(() => {
+    const modalExists = !!document.getElementById('confirmationModal');
+    console.log(`📊 Modal présent dans le DOM: ${modalExists ? '✅ OUI' : '❌ NON'}`);
+    
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    console.log(`📊 Boutons de suppression: ${deleteButtons.length}`);
+  }, 500);
+});

@@ -15,16 +15,16 @@
         <% if (task.description) { %>
         <p><%= task.description %></p>
         <% } %>
-          <br/>
+        <br />
         <small>
-          <i class="fa fa-calendar"></i> 
-            Créé le <%= moment(task.updatedAt).format("DD/MM/YYYY à HH:mm")%>
+          <i class="fa fa-calendar"></i>
+          Créé le <%= moment(task.updatedAt).format("DD/MM/YYYY à HH:mm")%>
         </small>
         <%if(task.updatedAt.getTime() !== task.createdAt.getTime()){%>
-          <small>
-            <i class="fa fa-edit"></i> 
-              Modifié il y a <%= moment(task.updatedAt).fromNow() %>
-            </small>
+        <small>
+          <i class="fa fa-edit"></i>
+          Modifié il y a <%= moment(task.updatedAt).fromNow() %>
+        </small>
 
         <%}%>
       </div>
@@ -54,15 +54,23 @@
           ><i class="fas fa-edit"></i
         ></a>
 
+        <button
+          type="button"
+          class="btn-icon btn-danger delete-btn"
+          title="Supprimer"
+          data-task-id="<%= task._id %>"
+          data-task-title="<%= task.title %>"
+        >
+          <i class="fas fa-trash"></i>
+        </button>
+
         <form
+          id="delete-form-<%= task._id %>"
           method="POST"
           action="/app/v1/tasks/<%= task._id %>/delete"
-          style="display: inline"
-          onsubmit="return confirm('Supprimer cette tâche ?');"
+          style="display: none"
         >
-          <button type="submit" class="btn-icon btn-danger" title="Supprimer">
-            <i class="fas fa-trash"></i>
-          </button>
+          <input type="hidden" name="_method" value="DELETE" />
         </form>
       </div>
     </div>
