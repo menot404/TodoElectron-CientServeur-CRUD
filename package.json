@@ -2,10 +2,12 @@
   "name": "learncrud_innodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "./backend/server.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "server": "nodemon server.js",
+    "start": "electron .",
+    "dev": "nodemon --exec electron ."
   },
   "keywords": [],
   "author": "",
@@ -17,5 +19,8 @@
     "express-ejs-layouts": "^2.5.1",
     "moment": "^2.30.1",
     "mongoose": "^8.19.3"
+  },
+  "devDependencies": {
+    "electron": "^39.2.7"
   }
 }
