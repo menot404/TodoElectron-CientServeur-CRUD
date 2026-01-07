@@ -32,7 +32,7 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 // Démarrage du serveur
-connecDB
+const server = connecDB
   .then(() => {
     app.listen(PORT, () => {
       console.log(`🚀 Serveur démarré sur ${localhost}${PORT}`);
@@ -43,3 +43,7 @@ connecDB
     console.error(`❌ Erreur MongoDB: ${err}`);
     process.exit(1);
   });
+
+
+// Ajouter cette ligne à la fin
+module.exports = server;
