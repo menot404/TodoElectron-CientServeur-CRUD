@@ -4,6 +4,7 @@ const routes = require("./backend/routes/indexRoute");
 const path = require("path");
 const errorHandler = require("./backend/middleware/errorHandler");
 const expressLayouts = require("express-ejs-layouts");
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 const localhost = "http://localhost:";
