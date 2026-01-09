@@ -2,18 +2,20 @@
   "name": "learncrud_innodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "./electron/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "start": "electron .",
-    "dev": "nodemon --exec electron ."
+    "desktop": "electron .",
+    "dev": "nodemon --exec electron .",
+    "start": "cross-env NODE_ENV=development electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "cors-env": "^1.0.2",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
