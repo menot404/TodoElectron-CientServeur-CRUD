@@ -11,14 +11,15 @@
     "build:linux": "electron-builder --linux"
   },
   "devDependencies": {
-    "electron": "^25.0.0",
+    "electron": "^39.2.7",
     "electron-builder": "^24.0.0"
   },
   "dependencies": {
+    "concurrently": "^8.0.0",
+    "cross-env": "^10.1.0",
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.1.0",
-    "electron-updater": "^6.1.0",
-    "concurrently": "^8.0.0"
+    "electron-updater": "^6.1.0"
   },
   "build": {
     "appId": "com.mycompany.myapp",
@@ -35,7 +36,9 @@
       {
         "from": "../backend",
         "to": "backend",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ]
   }

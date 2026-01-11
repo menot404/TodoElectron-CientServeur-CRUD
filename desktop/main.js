@@ -1,35 +1,47 @@
-/**
- * main.js - Point d'entrée simplifié
- * Délègue tout au AppManager
- */
+const { app, BrowserWindow, Menu } = require('electron');
+const path = require('path');
 
-// Désactiver les warnings pour un démarrage propre
-process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
+let mainWindow;
 
-// Optimisations de performance
-require('v8').setFlagsFromString('--max-old-space-size=4096');
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 1400,
+    height: 900,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true
+    },
+    icon: path.join(__dirname, 'assets', 'icon.png')
+  });
 
-async function bootstrap() {
-  try {
-    const AppManager = require('./core/AppManager');
-    
-    // Initialiser l'application
-    const appManager = new AppManager();
-    await appManager.initialize();
-    
-  } catch (error) {
-    console.error('💥 Bootstrap failed:', error);
-    
-    // Fallback simple en cas d'échec
-    const { app, dialog } = require('electron');
-    dialog.showErrorBox(
-      'Startup Error',
-      `Failed to start application:\n\n${error.message}`
-    );
-    
-    app.exit(1);
-  }
+  // Charger votre application web existante
+  // NOTE : Votre serveur doit être déjà en cours d'exécution
+  mainWindow.loadURL('http://localhost:3000');
+
+  // Menu minimal
+  const template = [
+    {
+      label: 'Fichier',
+      submenu: [
+        {
+          label: 'Quitter',
+          accelerator: 'CmdOrCtrl+Q',
+          click: () => app.quit()
+        }
+      ]
+    }
+  ];
+  
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
-// Point d'entrée
-bootstrap();
+app.whenReady().then(createWindow);
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
