@@ -1,19 +1,26 @@
 const { contextBridge, ipcRenderer} = require('electron');
+const { events } = require('../backend/model/taskModel');
 
 // Exposition sécurisée des APIs au processus de rendu
 contextBridge.executeInMainWorld('electronAPI', {
 
-    getAppVersion: ()=> ipcRenderer.invoke('get-app-version'),
-    showOpenDialog: (options) => ipcRenderer.invoke('show-open-dialog', options),
-    sendMessage: (message)=> ipcRenderer.invoke('send-message', message),
-    showNotification: (title, body)=>{
-        ipcRenderer.invoke('show-notification', {title, body})
-    }
-})
+     // APIs système
+    getAppInfo: ()=> ipcRenderer.invoke('get-app-info'),
 
-// Exposition des versions pour informations système
-contextBridge.exposeInMainWorld('versions', {
-    node: ()=> process.version.node,
-    chrome: ()=> process.versions.chrome,
-    electron:()=> process.versions.electron,
-})
+    // APIs fichiers
+    openFileDialog: () => ipcRenderer.invoke('dialog:open'),
+    saveFile: (content, filename)=>{
+        ipcRenderer.invoke('dialog:save', { content, filename })
+    },
+
+     // APIs fenêtre
+    minimizeWindow: ()=> ipcRenderer.send('window:minimize'),
+    maximizeWindow: ()=>ipcRenderer.send('window:maximize'),
+    closeWindow: ()=>ipcRenderer.send('window:close'),
+
+    // Communication
+    sendToMain: (channel, data)=> ipcRenderer.send(channel, data),
+    receiveFromMain: (channel, callback) =>{
+        ipcRenderer.on(channel, (event, ...args)=> callback(...args))
+    }
+});
