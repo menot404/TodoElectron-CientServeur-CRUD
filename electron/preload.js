@@ -1,5 +1,4 @@
 const { contextBridge, ipcRenderer} = require('electron');
-const { events } = require('../backend/model/taskModel');
 
 // Exposition sécurisée des APIs au processus de rendu
 contextBridge.executeInMainWorld('electronAPI', {
