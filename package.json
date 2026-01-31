@@ -4,26 +4,83 @@
   "description": "",
   "main": "./electron/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js",
-    "desktop": "electron .",
-    "dev": "nodemon --exec electron .",
-    "start": "cross-env NODE_ENV=development electron ."
+    "start": "node backend/server.js",
+    "electron": "electron .",
+    "dev": "nodemon backend/server.js",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "electron",
+    "express",
+    "ejs",
+    "crud"
+  ],
+  "author": "MeNot404",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
+    "concurrently": "^9.2.1",
     "cors-env": "^1.0.2",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
+    "electron-builder": "^26.4.0",
     "express": "^5.1.0",
     "express-ejs-layouts": "^2.5.1",
     "moment": "^2.30.1",
-    "mongoose": "^8.19.3"
+    "mongoose": "^8.19.3",
+    "wait-on": "^9.0.3"
   },
   "devDependencies": {
     "electron": "^39.2.7"
+  },
+  "build": {
+    "appId": "com.tonapp.crud-desktop",
+    "productName": "TODO APP CRUD Desktop",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "backend/**/*",
+      "frontend/**/*",
+      "!backend/node_modules/**/*",
+      "!**/node_modules/**/*",
+      "!**/.git/**/*",
+      "!**/.vscode/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "**/*",
+          "!node_modules/**/*"
+        ]
+      },
+      {
+        "from": "frontend",
+        "to": "frontend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icon.png"
+    }
   }
 }
