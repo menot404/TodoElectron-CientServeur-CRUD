@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 let mainWindow;
 let server;
@@ -12,7 +13,10 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
+    //Une meilleure intégration desktop
+    frame: true,
   });
 
   // Charger l'app depuis le serveur local
